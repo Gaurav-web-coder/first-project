@@ -1,0 +1,145 @@
+import tkinter as p
+import math
+
+screen = p.Tk()
+screen.title("Scientific Calculator")
+
+entry_box = p.Entry(screen, width=15, borderwidth=2, font=('Arial', 65))
+entry_box.grid(row=0, column=0, columnspan=5)
+
+b1 = p.Button(screen, text="1", font=("Arial", 65), width=3)
+b1.grid(row=1, column=0)
+b2 = p.Button(screen, text="2", font=("Arial", 65), width=3)
+b2.grid(row=1, column=1)
+b3 = p.Button(screen, text="3", font=("Arial", 65), width=3)
+b3.grid(row=1, column=2)
+bsin = p.Button(screen, text="sin", font=("Arial", 65), width=3)
+bsin.grid(row=1, column=3)
+b4 = p.Button(screen, text="4", font=("Arial", 65), width=3)
+b4.grid(row=2, column=0)
+b5 = p.Button(screen, text="5", font=("Arial", 65), width=3)
+b5.grid(row=2, column=1)
+b6 = p.Button(screen, text="6", font=("Arial", 65), width=3)
+b6.grid(row=2, column=2)
+bcos = p.Button(screen, text="cos", font=("Arial", 65), width=3)
+bcos.grid(row=2, column=3)
+b7 = p.Button(screen, text="7", font=("Arial", 65), width=3)
+b7.grid(row=3, column=0)
+b8 = p.Button(screen, text="8", font=("Arial", 65), width=3)
+b8.grid(row=3, column=1)
+b9 = p.Button(screen, text="9", font=("Arial", 65), width=3)
+b9.grid(row=3, column=2)
+btan = p.Button(screen, text="tan", font=("Arial", 65), width=3)
+btan.grid(row=3, column=3)
+b0 = p.Button(screen, text="0", font=("Arial", 65), width=3)
+b0.grid(row=4, column=0)
+b00 = p.Button(screen, text="00", font=("Arial", 65), width=3)
+b00.grid(row=4, column=6)
+b000 = p.Button(screen, text="000", font=("Arial", 65), width=3)
+b000.grid(row=5, column=6)
+bpoint = p.Button(screen, text=".", font=("Arial", 65), width=3)
+bpoint.grid(row=4, column=1)
+bthesis1 = p.Button(screen, text="(", font=("Arial", 65), width=3)
+bthesis1.grid(row=4, column=2)
+bthesis2 = p.Button(screen, text=")", font=("Arial", 65), width=3)
+bthesis2.grid(row=4, column=3)
+bequal = p.Button(screen, text="=", font=("Arial", 65), width=3)
+bequal.grid(row=5, column=3)
+bk1 = p.Button(screen, text="+", font=("Arial", 65), width=3)
+bk1.grid(row=1, column=4)
+bk2 = p.Button(screen, text="-", font=("Arial", 65), width=3)
+bk2.grid(row=2, column=4)
+bk3 = p.Button(screen, text="*", font=("Arial", 65), width=3)
+bk3.grid(row=3, column=4)
+bk4 = p.Button(screen, text="/", font=("Arial", 65), width=3)
+bk4.grid(row=4, column=4)
+bk5 = p.Button(screen, text="%", font=("Arial", 65), width=3)
+bk5.grid(row=5, column=4)
+bsqrt = p.Button(screen, text='sqrt', font=('Arial', 65), width=3)
+bsqrt.grid(row=5, column=2)
+bclear = p.Button(screen, text="Clr", font=("Arial", 65), width=3)
+bclear.grid(row=5, column=0)
+bdelete = p.Button(screen, text="Dlt", font=("Arial", 65), width=3)
+bdelete.grid(row=5, column=1)
+
+bexp = p.Button(screen, text="e^x", font=("Arial", 65), width=3)
+bexp.grid(row=1, column=6)
+bpower = p.Button(screen, text="x^y", font=("Arial", 65), width=3)
+bpower.grid(row=2, column=6)
+
+bfact = p.Button(screen, text="!", font=("Arial", 65), width=3)
+bfact.grid(row=3, column=6)
+
+b1.config(command=lambda: on_button_click('1'))
+b2.config(command=lambda: on_button_click('2'))
+b3.config(command=lambda: on_button_click('3'))
+b4.config(command=lambda: on_button_click('4'))
+b5.config(command=lambda: on_button_click('5'))
+b6.config(command=lambda: on_button_click('6'))
+b7.config(command=lambda: on_button_click('7'))
+b8.config(command=lambda: on_button_click('8'))
+b9.config(command=lambda: on_button_click('9'))
+b0.config(command=lambda: on_button_click('0'))
+b00.config(command=lambda: on_button_click('00'))
+b000.config(command=lambda: on_button_click('000'))
+
+bsqrt.config(command=lambda: on_button_click('sqrt('))  
+bpoint.config(command=lambda: on_button_click('.'))
+bsin.config(command=lambda: on_button_click('sin('))
+bcos.config(command=lambda: on_button_click('cos('))
+btan.config(command=lambda: on_button_click('tan('))
+bthesis1.config(command=lambda: on_button_click('('))
+bthesis2.config(command=lambda: on_button_click(')'))
+bk1.config(command=lambda: on_button_click('+'))
+bk2.config(command=lambda: on_button_click('-'))
+bk3.config(command=lambda: on_button_click('*'))
+bk4.config(command=lambda: on_button_click('/'))
+bk5.config(command=lambda: on_button_click('%'))
+bequal.config(command=lambda: on_calculate())
+bclear.config(command=lambda: on_clear())
+bdelete.config(command=lambda: on_delete())
+bfact.config(command=lambda: on_button_click("!"))
+
+bexp.config(command=lambda: on_button_click('math.exp('))  
+bpower.config(command=lambda: on_button_click('**'))  
+
+def on_button_click(value):
+    current = entry_box.get()
+    entry_box.delete(0, p.END)
+    entry_box.insert(p.END, current + value)
+
+def on_calculate():
+    try:
+        expression = entry_box.get()
+        expression = expression.replace("!","math.factorial")
+        expression = expression.replace("sqrt(", "math.sqrt(")
+        
+        # Handle degree conversion inside trigonometric functions
+        expression = expression.replace("sin", "math.sin(math.radians")
+        expression = expression.replace("cos", "math.cos(math.radians")
+        expression = expression.replace("tan", "math.tan(math.radians")
+        
+        expression = expression.replace("e^x", "math.exp")  
+        
+        # Close the brackets for trigonometric functions
+        expression = expression.replace("math.sin(", "math.sin(")
+        expression = expression.replace("math.cos(", "math.cos(")
+        expression = expression.replace("math.tan(", "math.tan(")
+        
+        # Evaluate the expression
+        result = eval(expression)
+        entry_box.delete(0, p.END)
+        entry_box.insert(p.END, str(result))
+    except:
+        entry_box.delete(0, p.END)
+        entry_box.insert(p.END, "GALAT INPUT")
+
+def on_clear():
+    entry_box.delete(0, p.END)
+
+def on_delete():
+    current = entry_box.get()
+    entry_box.delete(0, p.END)
+    entry_box.insert(p.END, current[:-1])
+
+screen.mainloop()
